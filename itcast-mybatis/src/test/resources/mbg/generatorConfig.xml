@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
+<generatorConfiguration>
+    <!--  数据库驱动  -->
+    <classPathEntry location="C:/apache/apache-maven-3.3.9/repository/mysql/mysql-connector-java/5.1.32/mysql-connector-java-5.1.32.jar"/>
+    <context id="context1">
+        <!-- 生成的pojo，将implements Serializable-->
+        <plugin type="org.mybatis.generator.plugins.SerializablePlugin"/>
+
+        <commentGenerator>
+            <property name="suppressDate" value="true"/>
+            <!--  是否去除自动生成的注释 true ：是 ： false: 否  -->
+            <property name="suppressAllComments" value="true" />
+        </commentGenerator>
+
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://192.168.12.168:3306/pinyougoudb" userId="root"
+                        password="root"/>
+        <javaModelGenerator targetPackage="com.pinyougou.pojo"
+                            targetProject="src/test/java"/>
+        <sqlMapGenerator targetPackage="mybatis.mappers"
+                         targetProject="src/test/resources"/>
+        <javaClientGenerator
+                targetPackage="com.pinyougou.mapper"
+                targetProject="src/test/java"
+                type="XMLMAPPER"/>
+        <table schema="pinyougoudb" tableName="tb_address" domainObjectName="TbAddress" enableCountByExample="false"
+
+               enableDeleteByExample="false"
+               enableSelectByExample="false"
+               enableUpdateByExample="false">
+        </table>
+        <table schema="pinyougoudb" tableName="tb_areas" domainObjectName="TbAreas" enableCountByExample="false"
+               enableDeleteByExample="false"
+               enableSelectByExample="false"
+               enableUpdateByExample="false">
+        </table>
+        <table schema="pinyougoudb" tableName="tb_brand" domainObjectName="TbBrand" enableCountByExample="false"
+               enableDeleteByExample="false"
+               enableSelectByExample="false"
+               enableUpdateByExample="false">
+        </table>
+        <table schema="pinyougoudb" tableName="tb_cities" domainObjectName="TbCities" enableCountByExample="false"
+               enableDeleteByExample="false"
+               enableSelectByExample="false"
+               enableUpdateByExample="false">
+        </table>
+        <table schema="pinyougoudb" tableName="tb_content" domainObjectName="TbContent" enableCountByExample="false"
+               enableDeleteByExample="false"
+               enableSelectByExample="false"
+               enableUpdateByExample="false">
+        </table>
+        <table schema="pinyougoudb" tableName="tb_content_category" domainObjectName="TbContentCategory" enableCountByExample="false"
+               enableDeleteByExample="false"
+               enableSelectByExample="false"
+               enableUpdateByExample="false">
+        </table>
+        <table schema="pinyougoudb" tableName="tb_freight_template" domainObjectName="TbFreightTemplate" enableCountByExample="false"
+               enableDeleteByExample="false"
+               enableSelectByExample="false"
+               enableUpdateByExample="false">
+        </table>
+        <table schema="pinyougoudb" tableName="tb_goods" domainObjectName="TbGoods" enableCountByExample="false"
+               enableDeleteByExample="false"
+               enableSelectByExample="false"
+               enableUpdateByExample="false">
+        </table>
+        <table schema="pinyougoudb" tableName="tb_goods_desc" domainObjectName="TbGoodsDesc" enableCountByExample="false"
+               enableDeleteByExample="false"
+               enableSelectByExample="false"
+               enableUpdateByExample="false">
+        </table>
+        <table schema="pinyougoudb" tableName="tb_item" domainObjectName="TbItem" enableCountByExample="false"
+               enableDeleteByExample="false"
+               enableSelectByExample="false"
+               enableUpdateByExample="false">
+        </table>
+        <table schema="pinyougoudb" tableName="tb_item_cat" domainObjectName="TbItemCat" enableCountByExample="false"
+               enableDeleteByExample="false"
+               enableSelectByExample="false"
+               enableUpdateByExample="false">
+        </table>
+        <table schema="pinyougoudb" tableName="tb_order" domainObjectName="TbOrder" enableCountByExample="false"
+               enableDeleteByExample="false"
+               enableSelectByExample="false"
+               enableUpdateByExample="false">
+        </table>
+        <table schema="pinyougoudb" tableName="tb_order_item" domainObjectName="TbOrderItem" enableCountByExample="false"
+               enableDeleteByExample="false"
+               enableSelectByExample="false"
+               enableUpdateByExample="false">
+        </table>
+        <table schema="pinyougoudb" tableName="tb_pay_log" domainObjectName="TbPayLog" enableCountByExample="false"
+               enableDeleteByExample="false"
+               enableSelectByExample="false"
+               enableUpdateByExample="false">
+        </table>
+        <table schema="pinyougoudb" tableName="tb_provinces" domainObjectName="TbProvinces" enableCountByExample="false"
+               enableDeleteByExample="false"
+               enableSelectByExample="false"
+               enableUpdateByExample="false">
+        </table>
+        <table schema="pinyougoudb" tableName="tb_seller" domainObjectName="TbSeller" enableCountByExample="false"
+               enableDeleteByExample="false"
+               enableSelectByExample="false"
+               enableUpdateByExample="false">
+        </table>
+        <table schema="pinyougoudb" tableName="tb_specification" domainObjectName="TbSpecification" enableCountByExample="false"
+               enableDeleteByExample="false"
+               enableSelectByExample="false"
+               enableUpdateByExample="false">
+        </table>
+        <table schema="pinyougoudb" tableName="tb_specification_option" domainObjectName="TbSpecificationOption" enableCountByExample="false"
+               enableDeleteByExample="false"
+               enableSelectByExample="false"
+               enableUpdateByExample="false">
+        </table>
+        <table schema="pinyougoudb" tableName="tb_seckill_goods" domainObjectName="TbSeckillGoods" enableCountByExample="false"
+               enableDeleteByExample="false"
+               enableSelectByExample="false"
+               enableUpdateByExample="false">
+        </table>
+        <table schema="pinyougoudb" tableName="tb_seckill_order" domainObjectName="TbSeckillOrder" enableCountByExample="false"
+               enableDeleteByExample="false"
+               enableSelectByExample="false"
+               enableUpdateByExample="false">
+        </table>
+        <table schema="pinyougoudb" tableName="tb_type_template" domainObjectName="TbTypeTemplate" enableCountByExample="false"
+               enableDeleteByExample="false"
+               enableSelectByExample="false"
+               enableUpdateByExample="false">
+        </table>
+        <table schema="pinyougoudb" tableName="tb_user" domainObjectName="TbUser" enableCountByExample="false"
+               enableDeleteByExample="false"
+               enableSelectByExample="false"
+               enableUpdateByExample="false">
+        </table>
+
+    </context>
+</generatorConfiguration>
