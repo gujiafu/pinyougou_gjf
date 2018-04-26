@@ -24,4 +24,16 @@ public class BrandController {
     public List<TbBrand> findAll(){
         return brandService.queryAll();
     }
+
+    /**
+     * 根据分页信息查询品牌列表
+     * @param page 页号
+     * @param rows 页大小
+     * @return 品牌列表
+     */
+    @GetMapping("/testPage")
+    //@ResponseBody
+    public List<TbBrand> testPage(Integer page, Integer rows){
+        return brandService.testPage(page, rows);
+    }
 }
