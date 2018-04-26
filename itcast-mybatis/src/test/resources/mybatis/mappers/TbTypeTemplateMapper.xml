@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pinyougou.mapper.TbTypeTemplateMapper">
+  <resultMap id="BaseResultMap" type="com.pinyougou.pojo.TbTypeTemplate">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="spec_ids" jdbcType="VARCHAR" property="specIds" />
+    <result column="brand_ids" jdbcType="VARCHAR" property="brandIds" />
+    <result column="custom_attribute_items" jdbcType="VARCHAR" property="customAttributeItems" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, name, spec_ids, brand_ids, custom_attribute_items
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tb_type_template
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from tb_type_template
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.pinyougou.pojo.TbTypeTemplate">
+    insert into tb_type_template (id, name, spec_ids, 
+      brand_ids, custom_attribute_items)
+    values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{specIds,jdbcType=VARCHAR}, 
+      #{brandIds,jdbcType=VARCHAR}, #{customAttributeItems,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.pinyougou.pojo.TbTypeTemplate">
+    insert into tb_type_template
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="specIds != null">
+        spec_ids,
+      </if>
+      <if test="brandIds != null">
+        brand_ids,
+      </if>
+      <if test="customAttributeItems != null">
+        custom_attribute_items,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="specIds != null">
+        #{specIds,jdbcType=VARCHAR},
+      </if>
+      <if test="brandIds != null">
+        #{brandIds,jdbcType=VARCHAR},
+      </if>
+      <if test="customAttributeItems != null">
+        #{customAttributeItems,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pinyougou.pojo.TbTypeTemplate">
+    update tb_type_template
+    <set>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="specIds != null">
+        spec_ids = #{specIds,jdbcType=VARCHAR},
+      </if>
+      <if test="brandIds != null">
+        brand_ids = #{brandIds,jdbcType=VARCHAR},
+      </if>
+      <if test="customAttributeItems != null">
+        custom_attribute_items = #{customAttributeItems,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pinyougou.pojo.TbTypeTemplate">
+    update tb_type_template
+    set name = #{name,jdbcType=VARCHAR},
+      spec_ids = #{specIds,jdbcType=VARCHAR},
+      brand_ids = #{brandIds,jdbcType=VARCHAR},
+      custom_attribute_items = #{customAttributeItems,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

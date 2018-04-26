@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pinyougou.mapper.TbPayLogMapper">
+  <resultMap id="BaseResultMap" type="com.pinyougou.pojo.TbPayLog">
+    <id column="out_trade_no" jdbcType="VARCHAR" property="outTradeNo" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="pay_time" jdbcType="TIMESTAMP" property="payTime" />
+    <result column="total_fee" jdbcType="BIGINT" property="totalFee" />
+    <result column="user_id" jdbcType="VARCHAR" property="userId" />
+    <result column="transaction_id" jdbcType="VARCHAR" property="transactionId" />
+    <result column="trade_state" jdbcType="VARCHAR" property="tradeState" />
+    <result column="order_list" jdbcType="VARCHAR" property="orderList" />
+    <result column="pay_type" jdbcType="VARCHAR" property="payType" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    out_trade_no, create_time, pay_time, total_fee, user_id, transaction_id, trade_state, 
+    order_list, pay_type
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tb_pay_log
+    where out_trade_no = #{outTradeNo,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from tb_pay_log
+    where out_trade_no = #{outTradeNo,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.pinyougou.pojo.TbPayLog">
+    insert into tb_pay_log (out_trade_no, create_time, pay_time, 
+      total_fee, user_id, transaction_id, 
+      trade_state, order_list, pay_type
+      )
+    values (#{outTradeNo,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{payTime,jdbcType=TIMESTAMP}, 
+      #{totalFee,jdbcType=BIGINT}, #{userId,jdbcType=VARCHAR}, #{transactionId,jdbcType=VARCHAR}, 
+      #{tradeState,jdbcType=VARCHAR}, #{orderList,jdbcType=VARCHAR}, #{payType,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.pinyougou.pojo.TbPayLog">
+    insert into tb_pay_log
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="outTradeNo != null">
+        out_trade_no,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="payTime != null">
+        pay_time,
+      </if>
+      <if test="totalFee != null">
+        total_fee,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="transactionId != null">
+        transaction_id,
+      </if>
+      <if test="tradeState != null">
+        trade_state,
+      </if>
+      <if test="orderList != null">
+        order_list,
+      </if>
+      <if test="payType != null">
+        pay_type,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="outTradeNo != null">
+        #{outTradeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="payTime != null">
+        #{payTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="totalFee != null">
+        #{totalFee,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="transactionId != null">
+        #{transactionId,jdbcType=VARCHAR},
+      </if>
+      <if test="tradeState != null">
+        #{tradeState,jdbcType=VARCHAR},
+      </if>
+      <if test="orderList != null">
+        #{orderList,jdbcType=VARCHAR},
+      </if>
+      <if test="payType != null">
+        #{payType,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pinyougou.pojo.TbPayLog">
+    update tb_pay_log
+    <set>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="payTime != null">
+        pay_time = #{payTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="totalFee != null">
+        total_fee = #{totalFee,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="transactionId != null">
+        transaction_id = #{transactionId,jdbcType=VARCHAR},
+      </if>
+      <if test="tradeState != null">
+        trade_state = #{tradeState,jdbcType=VARCHAR},
+      </if>
+      <if test="orderList != null">
+        order_list = #{orderList,jdbcType=VARCHAR},
+      </if>
+      <if test="payType != null">
+        pay_type = #{payType,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where out_trade_no = #{outTradeNo,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pinyougou.pojo.TbPayLog">
+    update tb_pay_log
+    set create_time = #{createTime,jdbcType=TIMESTAMP},
+      pay_time = #{payTime,jdbcType=TIMESTAMP},
+      total_fee = #{totalFee,jdbcType=BIGINT},
+      user_id = #{userId,jdbcType=VARCHAR},
+      transaction_id = #{transactionId,jdbcType=VARCHAR},
+      trade_state = #{tradeState,jdbcType=VARCHAR},
+      order_list = #{orderList,jdbcType=VARCHAR},
+      pay_type = #{payType,jdbcType=VARCHAR}
+    where out_trade_no = #{outTradeNo,jdbcType=VARCHAR}
+  </update>
+</mapper>
