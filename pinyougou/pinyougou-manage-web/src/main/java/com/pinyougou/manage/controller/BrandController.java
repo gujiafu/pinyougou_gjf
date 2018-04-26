@@ -22,7 +22,7 @@ public class BrandController {
     @GetMapping("/findAll")
     //@ResponseBody
     public List<TbBrand> findAll(){
-        return brandService.queryAll();
+        return brandService.findAll();
     }
 
     /**
@@ -34,6 +34,6 @@ public class BrandController {
     @GetMapping("/testPage")
     //@ResponseBody
     public List<TbBrand> testPage(Integer page, Integer rows){
-        return brandService.testPage(page, rows);
+        return brandService.findByPage(page, rows);
     }
 }
