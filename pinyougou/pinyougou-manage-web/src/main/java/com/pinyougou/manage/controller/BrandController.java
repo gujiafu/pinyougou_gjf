@@ -20,41 +20,44 @@ public class BrandController {
 
     @GetMapping("/findAll")
     //@ResponseBody
-    public List<TbBrand> findAll(){
+    public List<TbBrand> findAll() {
         return brandService.findAll();
     }
 
     /**
      * 根据分页信息查询品牌列表
+     *
      * @param page 页号
      * @param rows 页大小
      * @return 品牌列表
      */
     @GetMapping("/testPage")
     //@ResponseBody
-    public List<TbBrand> testPage(Integer page, Integer rows){
+    public List<TbBrand> testPage(Integer page, Integer rows) {
         return brandService.findByPage(page, rows);
     }
 
     /**
      * 根据分页信息查询品牌列表
+     *
      * @param page 页号
      * @param rows 页大小
      * @return 分页对象
      */
     @GetMapping("/findPage")
     //@ResponseBody
-    public PageResult findPage(Integer page, Integer rows){
+    public PageResult findPage(Integer page, Integer rows) {
         return brandService.findByPage(page, rows, null);
     }
 
     /**
      * 新增品牌
+     *
      * @param brand 品牌信息
      * @return 操作结果
      */
     @PostMapping("/add")
-    public Result add(@RequestBody TbBrand brand){
+    public Result add(@RequestBody TbBrand brand) {
         try {
             brandService.add(brand);
             return Result.ok("新增成功");
@@ -66,21 +69,23 @@ public class BrandController {
 
     /**
      * 根据主键查询
+     *
      * @param id 主键
      * @return 实体类
      */
     @GetMapping("/findOne")
-    public TbBrand findOne(Long id){
+    public TbBrand findOne(Long id) {
         return brandService.findById(id);
     }
 
     /**
      * 修改品牌
+     *
      * @param brand 品牌信息
      * @return 操作结果
      */
     @PostMapping("/update")
-    public Result update(@RequestBody TbBrand brand){
+    public Result update(@RequestBody TbBrand brand) {
         try {
             brandService.update(brand);
             return Result.ok("修改成功");
@@ -90,5 +95,19 @@ public class BrandController {
         return Result.fail("修改失败！");
     }
 
-
+    /**
+     * 批量删除记录
+     * @param ids id集合
+     * @return 操作结果
+     */
+    @GetMapping("/delete")
+    public Result delete(Long[] ids) {
+        try {
+            brandService.deleteByIds(ids);
+            return Result.ok("删除成功");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return Result.fail("删除失败");
+    }
 }
