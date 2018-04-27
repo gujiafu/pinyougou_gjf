@@ -3,11 +3,9 @@ package com.pinyougou.manage.controller;
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.pinyougou.pojo.TbBrand;
 import com.pinyougou.sellergoods.service.BrandService;
+import com.pinyougou.vo.PageResult;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -36,4 +34,11 @@ public class BrandController {
     public List<TbBrand> testPage(Integer page, Integer rows){
         return brandService.findByPage(page, rows);
     }
+
+    @GetMapping("/findPage")
+    //@ResponseBody
+    public PageResult findPage(Integer page, Integer rows){
+        return brandService.findByPage(page, rows, null);
+    }
+
 }
