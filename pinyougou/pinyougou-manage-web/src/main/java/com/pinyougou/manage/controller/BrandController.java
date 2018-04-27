@@ -4,6 +4,7 @@ import com.alibaba.dubbo.config.annotation.Reference;
 import com.pinyougou.pojo.TbBrand;
 import com.pinyougou.sellergoods.service.BrandService;
 import com.pinyougou.vo.PageResult;
+import com.pinyougou.vo.Result;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -35,10 +36,59 @@ public class BrandController {
         return brandService.findByPage(page, rows);
     }
 
+    /**
+     * 根据分页信息查询品牌列表
+     * @param page 页号
+     * @param rows 页大小
+     * @return 分页对象
+     */
     @GetMapping("/findPage")
     //@ResponseBody
     public PageResult findPage(Integer page, Integer rows){
         return brandService.findByPage(page, rows, null);
     }
+
+    /**
+     * 新增品牌
+     * @param brand 品牌信息
+     * @return 操作结果
+     */
+    @PostMapping("/add")
+    public Result add(@RequestBody TbBrand brand){
+        try {
+            brandService.add(brand);
+            return Result.ok("新增成功");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return Result.fail("新增失败！");
+    }
+
+    /**
+     * 根据主键查询
+     * @param id 主键
+     * @return 实体类
+     */
+    @GetMapping("/findOne")
+    public TbBrand findOne(Long id){
+        return brandService.findById(id);
+    }
+
+    /**
+     * 修改品牌
+     * @param brand 品牌信息
+     * @return 操作结果
+     */
+    @PostMapping("/update")
+    public Result update(@RequestBody TbBrand brand){
+        try {
+            brandService.update(brand);
+            return Result.ok("修改成功");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return Result.fail("修改失败！");
+    }
+
 
 }
