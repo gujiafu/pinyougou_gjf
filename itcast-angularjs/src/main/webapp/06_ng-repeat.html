@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>angularJS示例</title>
+    <script src="js/angular.min.js"></script>
+    <script type="text/javascript">
+        //定义并获取到一个模块
+        //第一个参数：表示模块的名称也就是在页面中使用了ng-app指令对应的值
+        //第二个参数：表示是否要加载其它的模块；如果不写表示获取一个已经存在的模块
+        var app = angular.module("app",[]);
+
+        //定义一个处理器
+        app.controller("myController", function ($scope) {
+
+            $scope.list = [1,2,3,4,5];
+
+            $scope.persons = [
+                {"id":121, "name":"黑马1", "address":"广州"},
+                {"id":122, "name":"黑马2", "address":"上海"},
+                {"id":123, "name":"黑马3", "address":"北京"}
+            ];
+        });
+    </script>
+</head>
+<body ng-app="app" ng-controller="myController">
+<div ng-repeat="num in list">
+    {{num}}<br>
+</div>
+
+<table>
+    <thead>
+    <tr>
+        <td>id</td>
+        <td>名称</td>
+        <td>地址</td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="p in persons">
+        <td>{{p.id}}</td>
+        <td>{{p.name}}</td>
+        <td>{{p.address}}</td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

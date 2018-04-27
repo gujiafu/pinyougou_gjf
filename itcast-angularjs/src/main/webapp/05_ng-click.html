@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>angularJS示例</title>
+    <script src="js/angular.min.js"></script>
+    <script type="text/javascript">
+        //定义并获取到一个模块
+        //第一个参数：表示模块的名称也就是在页面中使用了ng-app指令对应的值
+        //第二个参数：表示是否要加载其它的模块；如果不写表示获取一个已经存在的模块
+        var app = angular.module("app",[]);
+
+        //定义一个处理器
+        app.controller("myController", function ($scope) {
+
+            $scope.z = 0;
+
+            //计算数值方法
+            $scope.add = function () {
+                $scope.z = parseInt($scope.x) + parseInt($scope.y);
+            }
+        });
+    </script>
+</head>
+<body ng-app="app" ng-controller="myController">
+请输入x：<input ng-model="x"/><br>
+请输入y：<input ng-model="y"/><br>
+<input type="button" ng-click="add()" value="点击计算"><br>
+x+y={{z}}
+</body>
+</html>
