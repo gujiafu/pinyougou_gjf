@@ -11,16 +11,16 @@ public interface BaseService<T> {
     public List<T> findAll();
 
     //查询一个
-    public T findOne(T t);
+    public T findOne(Serializable id);
 
     //根据主键查询
-    public T findById(Serializable id);
+    public List<T> findByWhere(T t);
 
     //根据分页查询
-    public List<T> findByPage(Integer page, Integer rows);
+    public PageResult findPage(Integer page, Integer rows);
 
     //根据条件分页查询
-    public PageResult findByPage(Integer page, Integer rows, T t);
+    public PageResult findPage(Integer page, Integer rows, T t);
 
     //选择性新增
     public void add(T t);

@@ -22,23 +22,25 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
     }
 
     @Override
-    public T findOne(T t) {
-        return mapper.selectOne(t);
-    }
-
-    @Override
-    public T findById(Serializable id) {
+    public T findOne(Serializable id) {
         return mapper.selectByPrimaryKey(id);
     }
 
     @Override
-    public List<T> findByPage(Integer page, Integer rows) {
-        PageHelper.startPage(page, rows);
-        return mapper.selectAll();
+    public List<T> findByWhere(T t) {
+        return mapper.select(t);
     }
 
     @Override
-    public PageResult findByPage(Integer page, Integer rows, T t) {
+    public PageResult findPage(Integer page, Integer rows) {
+        PageHelper.startPage(page, rows);
+        List<T> list = mapper.select(null);
+        PageInfo<T> pageInfo = new PageInfo<>(list);
+        return  new PageResult(pageInfo.getTotal(), pageInfo.getList());
+    }
+
+    @Override
+    public PageResult findPage(Integer page, Integer rows, T t) {
         PageHelper.startPage(page, rows);
         List<T> list = mapper.select(t);
         PageInfo<T> pageInfo = new PageInfo<>(list);
@@ -65,4 +67,5 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
             }
         }
     }
+
 }

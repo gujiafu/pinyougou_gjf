@@ -16,4 +16,6 @@
             <property name="helperDialect" value="mysql"/>
         </plugin>
     </plugins>
+
+
 </configuration>
