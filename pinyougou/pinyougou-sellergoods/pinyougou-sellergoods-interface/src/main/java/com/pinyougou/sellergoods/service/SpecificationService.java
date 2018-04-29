@@ -6,6 +6,8 @@ import com.pinyougou.vo.PageResult;
 import com.pinyougou.vo.Specification;
 
 import java.io.Serializable;
+import java.util.List;
+import java.util.Map;
 
 public interface SpecificationService extends BaseService<TbSpecification> {
 
@@ -22,4 +24,5 @@ public interface SpecificationService extends BaseService<TbSpecification> {
 
     void delByIds(Serializable[] ids);
 
+    List<Map<String,Object>> selectOptionList();
 }

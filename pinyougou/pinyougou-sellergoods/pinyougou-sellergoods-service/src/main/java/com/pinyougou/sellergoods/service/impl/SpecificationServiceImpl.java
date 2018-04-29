@@ -18,6 +18,7 @@ import tk.mybatis.mapper.entity.Example;
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 @Service(interfaceClass = SpecificationService.class,timeout = 60000)
 public class SpecificationServiceImpl extends BaseServiceImpl<TbSpecification> implements SpecificationService {
@@ -114,5 +115,12 @@ public class SpecificationServiceImpl extends BaseServiceImpl<TbSpecification> i
             example.createCriteria().andIn("specId", Arrays.asList(ids));
             specificationOptionMapper.deleteByExample(example);
         }
+    }
+
+    /**
+     * 查找所有规格选项
+     */
+    public List<Map<String,Object>> selectOptionList() {
+        return specificationMapper.selectOptionList();
     }
 }
