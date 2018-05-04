@@ -1,17 +1,17 @@
-app.controller("goodsController", function ($scope, $controller, goodsService) {
+app.controller("itemCatController", function ($scope, $controller, itemCatService) {
 
     //加载baseController控制器并传入1个作用域，与angularJs运行时作用域相同.
     $controller("baseController",{$scope:$scope});
 
     //加载列表数据
     $scope.findAll = function(){
-        goodsService.findAll().success(function (response) {
+        itemCatService.findAll().success(function (response) {
             $scope.list = response;
         });
     };
 
     $scope.findPage = function (page, rows) {
-        goodsService.findPage(page, rows).success(function (response) {
+        itemCatService.findPage(page, rows).success(function (response) {
             $scope.list = response.rows;
             $scope.paginationConf.totalItems = response.total;
         });
@@ -19,17 +19,14 @@ app.controller("goodsController", function ($scope, $controller, goodsService) {
 
     $scope.save = function () {
         var object;
-        $scope.entity.goodsDesc.introduction = editor.html();
-        if($scope.entity.goods.id != null){//更新
-            object = goodsService.update($scope.entity);
+        if($scope.entity.id != null){//更新
+            object = itemCatService.update($scope.entity);
         } else {//新增
-            object = goodsService.add($scope.entity);
+            object = itemCatService.add($scope.entity);
         }
         object.success(function (response) {
             if(response.success){
-                alert(response.message);
-                $scope.entity= {};
-                editor.html("");
+                $scope.reloadList();
             } else {
                 alert(response.message);
             }
@@ -37,7 +34,7 @@ app.controller("goodsController", function ($scope, $controller, goodsService) {
     };
 
     $scope.findOne = function (id) {
-        goodsService.findOne(id).success(function (response) {
+        itemCatService.findOne(id).success(function (response) {
             $scope.entity = response;
         });
     };
@@ -48,7 +45,7 @@ app.controller("goodsController", function ($scope, $controller, goodsService) {
             return;
         }
         if(confirm("确定要删除已选择的记录吗")){
-            goodsService.delete($scope.selectedIds).success(function (response) {
+            itemCatService.delete($scope.selectedIds).success(function (response) {
                 if(response.success){
                     $scope.reloadList();
                     $scope.selectedIds = [];
@@ -61,11 +58,40 @@ app.controller("goodsController", function ($scope, $controller, goodsService) {
 
     $scope.searchEntity = {};//初始为空
     $scope.search = function (page, rows) {
-        goodsService.search(page, rows, $scope.searchEntity).success(function (response) {
+        itemCatService.search(page, rows, $scope.searchEntity).success(function (response) {
             $scope.list = response.rows;
             $scope.paginationConf.totalItems = response.total;
         });
 
     };
+
+    // 初始化grand
+    $scope.grade = 1;
+    $scope.selectList = function (grade,entity) {
+        $scope.grade = grade;
+        $scope.entity_0 = entity;
+        $scope.findByParentId(entity.id);
+        switch(grade){
+            case 1:
+                $scope.entity_1 = null;
+                $scope.entity_2 = null;
+                break;
+            case 2:
+                $scope.entity_1 = entity;
+                $scope.entity_2 = null;
+                break;
+            default:
+                $scope.entity_2 = entity;
+        }
+    }
+
+
+
+    // 指定pid查找子类
+    $scope.findByParentId = function (pid) {
+        itemCatService.findByParentId(pid).success(function (response) {
+            $scope.list = response;
+        })
+    }
 
 });

@@ -31,10 +31,27 @@
     <script src="../js/controller/baseController.js"></script>
     <script src="../js/controller/goodsController.js"></script>
 
+	<!-- 正文区域 /-->
+	<script type="text/javascript">
+
+        var editor;
+        KindEditor.ready(function(K) {
+            editor = K.create('textarea[name="content"]', {
+                allowFileManager : true
+            });
+        });
+
+        openEditor = function () {
+//			alert(editor.html());
+            alert(editor.html());
+        }
+
+	</script>
+
 </head>
 
 <body ng-app="pinyougou" ng-controller="goodsController" ng-init="" class="hold-transition skin-red sidebar-mini">
-
+<input type="button" onclick="openEditor()" value="打开值">
             <!-- 正文区域 -->
             <section class="content">
 
@@ -117,7 +134,7 @@
                                    <div class="col-md-10 data editer">
                                        <textarea name="content" style="width:800px;height:400px;visibility:hidden;" ></textarea>
                                    </div>
-		                           
+
 		                           <div class="col-md-2 title rowHeight2x">包装列表</div>
 		                           <div class="col-md-10 data rowHeight2x">
 		                               
@@ -432,17 +449,8 @@
 </div>
 
             
-            <!-- 正文区域 /-->
-<script type="text/javascript">
 
-	var editor;
-	KindEditor.ready(function(K) {
-		editor = K.create('textarea[name="content"]', {
-			allowFileManager : true
-		});
-	});
 
-</script>
        
 </body>
 
