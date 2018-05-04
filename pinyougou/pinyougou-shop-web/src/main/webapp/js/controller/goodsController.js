@@ -1,4 +1,4 @@
-app.controller("goodsController", function ($scope, $controller, goodsService) {
+app.controller("goodsController", function ($scope, $controller, goodsService, uploadService) {
 
     //加载baseController控制器并传入1个作用域，与angularJs运行时作用域相同.
     $controller("baseController",{$scope:$scope});
@@ -65,7 +65,18 @@ app.controller("goodsController", function ($scope, $controller, goodsService) {
             $scope.list = response.rows;
             $scope.paginationConf.totalItems = response.total;
         });
-
     };
+
+    $scope.uploadFile = function () {
+        uploadService.uploadFile().success(function (response) {
+            if(response.success){
+                $scope.image_entity.url = response.message;
+            }else{
+                alter(response.message);
+            }
+        }).error(function () {
+            alert(" 上传图片失败");
+        })
+    }
 
 });
