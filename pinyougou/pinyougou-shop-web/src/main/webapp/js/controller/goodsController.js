@@ -67,6 +67,7 @@ app.controller("goodsController", function ($scope, $controller, goodsService, u
         });
     };
 
+    // 图片上传
     $scope.uploadFile = function () {
         uploadService.uploadFile().success(function (response) {
             if(response.success){
@@ -77,6 +78,17 @@ app.controller("goodsController", function ($scope, $controller, goodsService, u
         }).error(function () {
             alert(" 上传图片失败");
         })
+    }
+
+    // 定义商品
+    $scope.entity = {"goods":{},"goodsDesc":{"itemImages":[]}};
+    // 图片保存
+    $scope.add_image_entity = function () {
+        $scope.entity.goodsDesc.itemImages.push($scope.image_entity);
+        $scope.image_entity = {};
+    }
+    $scope.delete_image_entity = function (index) {
+        $scope.entity.goodsDesc.itemImages.splice(index,1);
     }
 
 });
