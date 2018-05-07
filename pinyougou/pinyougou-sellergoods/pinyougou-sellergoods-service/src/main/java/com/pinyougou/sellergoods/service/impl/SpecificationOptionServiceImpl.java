@@ -34,4 +34,15 @@ public class SpecificationOptionServiceImpl extends BaseServiceImpl<TbSpecificat
 
         return new PageResult(pageInfo.getTotal(), pageInfo.getList());
     }
+
+    /**
+     * 根据规格id查找规格选项列表
+     * @param specId
+     * @return
+     */
+    public List<TbSpecificationOption> findBySepcId(Long specId) {
+        TbSpecificationOption option = new TbSpecificationOption();
+        option.setSpecId(specId);
+        return specificationOptionMapper.select(option);
+    }
 }
