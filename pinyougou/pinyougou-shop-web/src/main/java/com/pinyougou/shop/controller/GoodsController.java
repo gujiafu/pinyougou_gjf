@@ -39,7 +39,7 @@ public class GoodsController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return Result.fail("增加失败");
+        return Result.fail("增加失败了");
     }
 
     @GetMapping("/findOne")
@@ -79,6 +79,8 @@ public class GoodsController {
     @PostMapping("/search")
     public PageResult search(@RequestBody  TbGoods goods, @RequestParam(value = "page", defaultValue = "1")Integer page,
                                @RequestParam(value = "rows", defaultValue = "10")Integer rows) {
+        String name = SecurityContextHolder.getContext().getAuthentication().getName();
+        goods.setSellerId(name);
         return goodsService.search(page, rows, goods);
     }
 

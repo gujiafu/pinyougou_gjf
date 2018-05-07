@@ -31,7 +31,7 @@
 
 </head>
 
-<body ng-app="pinyougou" ng-controller="goodsController" ng-init="" class="hold-transition skin-red sidebar-mini">
+<body ng-app="pinyougou" ng-controller="goodsController" ng-init="findItemCatList()" class="hold-transition skin-red sidebar-mini">
   <!-- .box-body -->
                 
                     <div class="box-header with-border">
@@ -90,30 +90,20 @@
 			                          </tr>
 			                      </thead>
 			                      <tbody>
-			                          <tr>
+			                          <tr ng-repeat="entity in list">
 			                              <td><input  type="checkbox"></td>			                              
-				                          <td>1</td>
-									      <td>小米6S手机</td>
-									      <td>1090</td>
-									      <td>数码</td>
-									      <td>手机</td>
-									      <td>国产手机</td>
+				                          <td>{{entity.id}}</td>
+									      <td>{{entity.goodsName}}</td>
+									      <td>{{entity.price}}</td>
+									      <td>{{itemCarList[entity.category1Id]}}</td>
+									      <td>{{itemCarList[entity.category2Id]}}</td>
+									      <td>{{itemCarList[entity.category3Id]}}</td>
+
 		                                  <td>
 		                                  	<span>
-		                                  		未申请
+		                                  		{{auditStatus[entity.auditStatus]}}
 		                                  	</span>
-		                                  	<span >
-		                                  		申请中
-		                                  	</span>
-		                                  	<span>
-		                                  		审核通过
-		                                  	</span>
-		                                  	<span>
-		                                  		审核未通过
-		                                  	</span>
-		                                  	<span>
-		                                  		关闭
-		                                  	</span>											
+
 		                                  </td>		                                  
 		                                  <td class="text-center">                                          
 		                                 	  <a href="" class="btn bg-olive btn-xs">修改</a>                  

@@ -31,6 +31,8 @@ app.controller("goodsController", function ($scope, $controller, goodsService, u
                 alert(response.message);
                 $scope.entity= {};
                 editor.html("");
+                specItems =[];
+                itemArray =[];
             } else {
                 alert(response.message);
             }
@@ -202,6 +204,26 @@ app.controller("goodsController", function ($scope, $controller, goodsService, u
             $scope.entity.itemList = [];
         }
 
+    }
+
+    // 点击是否启用规格
+    $scope.isEnableSpec = function () {
+        specItems =[];
+        itemArray =[];
+        $scope.entity.itemList=[];
+    }
+
+    // 定义商品状态数组
+    $scope.auditStatus =["未申请","申请中","审核通过","审核未通过","关闭"];
+
+    //根据itemCat的id查找name
+    $scope.itemCarList ={};
+    $scope.findItemCatList = function () {
+        itemCatService.findAll().success(function (response) {
+            for (var i = 0; i < response.length; i++) {
+                $scope.itemCarList[response[i].id] = response[i].name;
+            }
+        })
     }
 
 
