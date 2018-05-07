@@ -215,7 +215,7 @@
                             	<p>
                             	
                             	<div>
-                            		{{entity.goodsDesc.specificationItems}}
+
 	                                <div class="row data-type" >
 		                                <div ng-repeat="spec in specList">
 			                                <div class="col-md-2 title">{{spec.text}}</div>
@@ -243,24 +243,22 @@
 											    </tr>
 								            </thead>
 						                    <tbody>
-						                      <tr>
-										            <td>
-										            	4.0
+						                      <tr ng-repeat="item in entity.itemList">
+										            <td ng-repeat="specItem in entity.goodsDesc.specificationItems">
+										            	{{item.spec[specItem.attributeName]}}
 										            </td>
-													<td>
-										            	3G
-										            </td>
+
 										            <td>
-										           		<input class="form-control"  placeholder="价格">
+										           		<input ng-model="item.price" class="form-control"  placeholder="价格">
 										            </td>
 										            <td>
-										            	<input class="form-control" placeholder="库存数量">
+										            	<input ng-model="item.stockCount" class="form-control" placeholder="库存数量">
 										            </td>
 										            <td>
-										             	<input type="checkbox" >
+										             	<input ng-model="item.status" type="checkbox" >
 										            </td>
 										            <td>
-										                <input type="checkbox" >
+										                <input ng-model="item.isDefault" type="checkbox" >
 										            </td>
 						                      </tr>
 

@@ -145,7 +145,7 @@ app.controller("goodsController", function ($scope, $controller, goodsService, u
     })
 
     // 勾选规格选项,添加到$scope.entity.goodsDesc.specificationItems
-    $scope.entity = {goods:{},goodsDesc:{itemImages:[],specificationItems:[]},itemList:[]};
+    $scope.entity = {goods:{},goodsDesc:{itemImages:[],specificationItems:[]}};
     var specItems = [];
     $scope.checkOption = function (checkOptionValue, attrName, attrValue) {
         // 勾选
@@ -196,8 +196,12 @@ app.controller("goodsController", function ($scope, $controller, goodsService, u
         // 遍历itemArray组成规格选项
         var itemList = [];
         var newArray =[];
-        getItemList(itemArray,0,0,itemList,newArray);
-        $scope.entity.itemList = itemList;
+        if(itemArray.length>0){
+            $scope.entity.itemList = getItemList(itemArray,0,0,itemList,newArray);
+        }else{
+            $scope.entity.itemList = [];
+        }
+
     }
 
 
@@ -212,7 +216,6 @@ var Map= function (key, value) {
 
 // 二维数组的笛卡尔集
 var getItemList = function (oriArray, oneIndex, twoIndex, itemList, array) {
-
     // 遍历二维数组
     for (var i = 0; i < oriArray[oneIndex].length; i++) {
         array[twoIndex] = oriArray[oneIndex][i];
@@ -221,8 +224,16 @@ var getItemList = function (oriArray, oneIndex, twoIndex, itemList, array) {
             getItemList(oriArray,oneIndex+1, twoIndex+1, itemList, array);
         }else{
             // 一维数组拷贝放到二维数组中
-            var strings = JSON.parse(JSON.stringify(array));
-            itemList.push({spec:strings,price:12,stockCount:900,isDefault:0,isEnableSpec:0});
+            var spec = JSON.parse(JSON.stringify(array));
+            var specStr ="";
+            for (var j = 0; j < spec.length; j++) {
+                var obj = spec[j];
+                obj = JSON.stringify(obj);
+                specStr+=obj;
+            }
+            specStr = specStr.replace(/\}\{/,",");
+            specStr = JSON.parse(specStr);
+            itemList.push({spec:specStr,price:12,stockCount:900,isDefault:0,status:0});
         }
     }
     return itemList;
