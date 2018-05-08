@@ -12,6 +12,7 @@ import com.pinyougou.service.impl.BaseServiceImpl;
 import com.pinyougou.vo.Goods;
 import com.pinyougou.vo.PageResult;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 import tk.mybatis.mapper.entity.Example;
 
@@ -21,6 +22,7 @@ import java.util.Map;
 import java.util.Set;
 
 @Service(interfaceClass = GoodsService.class,timeout = 600000)
+@Transactional
 public class GoodsServiceImpl extends BaseServiceImpl<TbGoods> implements GoodsService {
 
     @Autowired
@@ -69,8 +71,6 @@ public class GoodsServiceImpl extends BaseServiceImpl<TbGoods> implements GoodsS
         goods.getGoods().setAuditStatus("0");
         add(goods.getGoods());
 
-        //int i = 1/0;
-
         //2、保存描述信息
         goods.getGoodsDesc().setGoodsId(goods.getGoods().getId());
         goodsDescMapper.insertSelective(goods.getGoodsDesc());
@@ -89,9 +89,30 @@ public class GoodsServiceImpl extends BaseServiceImpl<TbGoods> implements GoodsS
             item.setNum(9999);
             item.setStatus("0");//审核通过以后再启用
             item.setIsDefault("1");//默认
+            item.setNum(10);
             itemMapper.insertSelective(item);
         }
 
+    }
+
+    @Override
+    public Goods findGoods(Long id) {
+        Goods goods = new Goods();
+        // 设置goods
+        TbGoods tbGoods = goodsMapper.selectByPrimaryKey(id);
+        goods.setGoods(tbGoods);
+
+        // 设置goodsDesc
+        TbGoodsDesc tbGoodsDesc = goodsDescMapper.selectByPrimaryKey(id);
+        goods.setGoodsDesc(tbGoodsDesc);
+
+        // 设置itemCarList
+        Example example = new Example(TbItem.class);
+        example.createCriteria().andEqualTo("goodsId",id);
+        List<TbItem> itemList = itemMapper.selectByExample(example);
+        goods.setItemList(itemList);
+
+        return goods;
     }
 
     /**
@@ -110,7 +131,7 @@ public class GoodsServiceImpl extends BaseServiceImpl<TbGoods> implements GoodsS
                     title += " " + entry.getValue();
                 }
                 item.setTitle(title);
-
+                item.setNum(item.getStockCount());
                 setItem(item, goods);
 
                 itemMapper.insertSelective(item);

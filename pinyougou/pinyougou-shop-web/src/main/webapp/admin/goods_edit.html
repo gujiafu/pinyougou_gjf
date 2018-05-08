@@ -48,7 +48,7 @@
 
 </head>
 
-<body ng-app="pinyougou" ng-controller="goodsController" ng-init="selectItemCat1List()" class="hold-transition skin-red sidebar-mini">
+<body ng-app="pinyougou" ng-controller="goodsController" ng-init="selectItemCat1List();findOne()" class="hold-transition skin-red sidebar-mini">
 
             <!-- 正文区域 -->
             <section class="content">
@@ -222,7 +222,9 @@
 					                        <div class="col-md-10 data" >
 					                               
 					                            <span ng-repeat="option in spec.options">
-					                            	<input ng-model="checkOptionValue" ng-click="checkOption(checkOptionValue, spec.text, option.optionName)" type="checkbox">{{option.optionName}}
+					                            	<input ng-checked="checkAttributeValue(spec.text,option.optionName)"
+														   ng-model="checkOptionValue" ng-click="checkOption(checkOptionValue, spec.text, option.optionName)"
+														   type="checkbox">{{option.optionName}}
 					                            </span>  	
 
 					                        </div>
@@ -269,7 +271,7 @@
 	                                
 	                            </div>
                             </div>
-                            {{entity.itemList}}
+
                         </div>
                         <!--tab内容/-->
 						<!--表单内容/-->

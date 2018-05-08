@@ -1,56 +1,52 @@
-package com.pinyougou.shop.controller;
+package com.pinyougou.manage.controller;
 
 import com.alibaba.dubbo.config.annotation.Reference;
-import com.pinyougou.pojo.TbGoods;
-import com.pinyougou.sellergoods.service.GoodsService;
-import com.pinyougou.vo.Goods;
+import com.pinyougou.pojo.TbContentCategory;
+import com.pinyougou.content.service.ContentCategoryService;
 import com.pinyougou.vo.PageResult;
 import com.pinyougou.vo.Result;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RequestMapping("/goods")
+@RequestMapping("/contentCategory")
 @RestController
-public class GoodsController {
+public class ContentCategoryController {
 
     @Reference
-    private GoodsService goodsService;
+    private ContentCategoryService contentCategoryService;
 
     @RequestMapping("/findAll")
-    public List<TbGoods> findAll() {
-        return goodsService.findAll();
+    public List<TbContentCategory> findAll() {
+        return contentCategoryService.findAll();
     }
 
     @GetMapping("/findPage")
     public PageResult findPage(@RequestParam(value = "page", defaultValue = "1")Integer page,
                                @RequestParam(value = "rows", defaultValue = "10")Integer rows) {
-        return goodsService.findPage(page, rows);
+        return contentCategoryService.findPage(page, rows);
     }
 
     @PostMapping("/add")
-    public Result add(@RequestBody Goods goods) {
+    public Result add(@RequestBody TbContentCategory contentCategory) {
         try {
-            String name = SecurityContextHolder.getContext().getAuthentication().getName();
-            goods.getGoods().setSellerId(name);
-            goodsService.addGoods(goods);
+            contentCategoryService.add(contentCategory);
             return Result.ok("增加成功");
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return Result.fail("增加失败了");
+        return Result.fail("增加失败");
     }
 
     @GetMapping("/findOne")
-    public Goods findOne(Long id) {
-        return goodsService.findGoods(id);
+    public TbContentCategory findOne(Long id) {
+        return contentCategoryService.findOne(id);
     }
 
     @PostMapping("/update")
-    public Result update(@RequestBody TbGoods goods) {
+    public Result update(@RequestBody TbContentCategory contentCategory) {
         try {
-            goodsService.update(goods);
+            contentCategoryService.update(contentCategory);
             return Result.ok("修改成功");
         } catch (Exception e) {
             e.printStackTrace();
@@ -61,7 +57,7 @@ public class GoodsController {
     @GetMapping("/delete")
     public Result delete(Long[] ids) {
         try {
-            goodsService.deleteByIds(ids);
+            contentCategoryService.deleteByIds(ids);
             return Result.ok("删除成功");
         } catch (Exception e) {
             e.printStackTrace();
@@ -71,17 +67,15 @@ public class GoodsController {
 
     /**
      * 分页查询列表
-     * @param goods 查询条件
+     * @param contentCategory 查询条件
      * @param page 页号
      * @param rows 每页大小
      * @return
      */
     @PostMapping("/search")
-    public PageResult search(@RequestBody  TbGoods goods, @RequestParam(value = "page", defaultValue = "1")Integer page,
+    public PageResult search(@RequestBody  TbContentCategory contentCategory, @RequestParam(value = "page", defaultValue = "1")Integer page,
                                @RequestParam(value = "rows", defaultValue = "10")Integer rows) {
-        String name = SecurityContextHolder.getContext().getAuthentication().getName();
-        goods.setSellerId(name);
-        return goodsService.search(page, rows, goods);
+        return contentCategoryService.search(page, rows, contentCategory);
     }
 
 }

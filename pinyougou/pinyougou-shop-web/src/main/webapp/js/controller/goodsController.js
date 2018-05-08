@@ -1,5 +1,5 @@
 app.controller("goodsController", function ($scope, $controller, goodsService, uploadService,
-                                            itemCatService,typeTemplateService) {
+                                            itemCatService,typeTemplateService,$location) {
 
     //加载baseController控制器并传入1个作用域，与angularJs运行时作用域相同.
     $controller("baseController",{$scope:$scope});
@@ -39,11 +39,6 @@ app.controller("goodsController", function ($scope, $controller, goodsService, u
         });
     };
 
-    $scope.findOne = function (id) {
-        goodsService.findOne(id).success(function (response) {
-            $scope.entity = response;
-        });
-    };
 
     $scope.delete = function () {
         if($scope.selectedIds.length < 1){
@@ -135,7 +130,9 @@ app.controller("goodsController", function ($scope, $controller, goodsService, u
                     $scope.brandIds = JSON.parse(response.brandIds);
 
                     // 根据模板获取扩展属性
-                    $scope.entity.goodsDesc.customAttributeItems = JSON.parse(response.customAttributeItems);
+                    if($location.search()["id"]==null){
+                        $scope.entity.goodsDesc.customAttributeItems = JSON.parse(response.customAttributeItems);
+                    }
 
                     // 根据模板id获取规格列表
                     typeTemplateService.findSpecList(response.id).success(function (response) {
@@ -225,6 +222,59 @@ app.controller("goodsController", function ($scope, $controller, goodsService, u
             }
         })
     }
+
+    // 点击修改商品,回显商品数据数据
+    $scope.findOne = function () {
+        var id = $location.search()["id"];
+        if(id==null){
+            return;
+        }
+        goodsService.findOne(id).success(function (response) {
+            $scope.entity = response;
+
+            // 回显富文本
+            editor.html($scope.entity.goodsDesc.introduction);
+
+            // 回显图片
+            $scope.entity.goodsDesc.itemImages = JSON.parse($scope.entity.goodsDesc.itemImages);
+
+            // 回显扩展属性
+            $scope.entity.goodsDesc.customAttributeItems = JSON.parse($scope.entity.goodsDesc.customAttributeItems);
+
+            // 回显选中规格选项
+            $scope.entity.goodsDesc.specificationItems = JSON.parse($scope.entity.goodsDesc.specificationItems);
+            $scope.checkAttributeValue = function (specName, specOptionName) {
+                var specificationItems = $scope.entity.goodsDesc.specificationItems;
+                for (var i = 0; i < specificationItems.length; i++) {
+                    var attributeName = specificationItems[i].attributeName;
+                    if(specName==attributeName){
+                        // for (var j = 0; j < specificationItems[i][attributeValue].length; j++) {
+                        //     var attributeValue = specificationItems[i][attributeValue][j];
+                        //     if(attributeValue==specOptionName){
+                        //         return true;
+                        //     }
+                        // }
+                        if(specificationItems[i].attributeValue.indexOf(specOptionName)>-1){
+                            return true;
+                        }
+                    }
+                }
+                return false;
+            }
+            
+            // 商品sku回显
+            if($scope.entity.itemList.length>0){
+                for (var i = 0; i < $scope.entity.itemList.length; i++) {
+                   $scope.entity.itemList[i].spec = JSON.parse($scope.entity.itemList[i].spec);
+                }
+            }
+
+            
+
+        });
+    };
+
+
 
 
 });

@@ -14,4 +14,6 @@ public interface GoodsService extends BaseService<TbGoods> {
      * @param goods
      */
     void addGoods(Goods goods);
+
+    Goods findGoods(Long id);
 }
