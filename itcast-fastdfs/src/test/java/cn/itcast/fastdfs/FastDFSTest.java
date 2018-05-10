@@ -17,7 +17,7 @@ public class FastDFSTest {
         TrackerServer trackerServer = trackerClient.getConnection();
         StorageServer storageServer = null;
         StorageClient storageClient = new StorageClient(trackerServer, storageServer);
-        String[] uploadFile = storageClient.upload_file("D:\\image\\1.jpg", "jpg", null);
+        String[] uploadFile = storageClient.upload_file("D:\\image\\hot\\1.jpg", "jpg", null);
 
         if (uploadFile != null && uploadFile.length > 1) {
             for (String str : uploadFile) {

@@ -3,7 +3,6 @@ package com.pinyougou.pojo;
 import org.apache.solr.client.solrj.beans.Field;
 import org.springframework.data.solr.core.mapping.Dynamic;
 
-import javax.naming.Name;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -268,5 +267,35 @@ public class TbItem implements Serializable {
 
     public void setSpecMap(Map<String, String> specMap) {
         this.specMap = specMap;
+    }
+
+    @Override
+    public String toString() {
+        return "TbItem{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", sellPoint='" + sellPoint + '\'' +
+                ", price=" + price +
+                ", stockCount=" + stockCount +
+                ", num=" + num +
+                ", barcode='" + barcode + '\'' +
+                ", image='" + image + '\'' +
+                ", categoryid=" + categoryid +
+                ", status='" + status + '\'' +
+                ", createTime=" + createTime +
+                ", updateTime=" + updateTime +
+                ", itemSn='" + itemSn + '\'' +
+                ", costPirce=" + costPirce +
+                ", marketPrice=" + marketPrice +
+                ", isDefault='" + isDefault + '\'' +
+                ", goodsId=" + goodsId +
+                ", sellerId='" + sellerId + '\'' +
+                ", cartThumbnail='" + cartThumbnail + '\'' +
+                ", category='" + category + '\'' +
+                ", brand='" + brand + '\'' +
+                ", spec='" + spec + '\'' +
+                ", seller='" + seller + '\'' +
+                ", specMap=" + specMap +
+                '}';
     }
 }
