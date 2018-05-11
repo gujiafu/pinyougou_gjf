@@ -16,4 +16,7 @@ public interface ItemCatService extends BaseService<TbItemCat> {
      * @return
      */
     List<TbItemCat> findByParentId(Long pid);
+
+    void updateItemCatToRedis();
+
 }

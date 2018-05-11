@@ -17,4 +17,6 @@ public interface TypeTemplateService extends BaseService<TbTypeTemplate> {
      * @return
      */
     List<Map> findSpecList(Long id);
+
+    void updateTypeTemplateToRedis();
 }

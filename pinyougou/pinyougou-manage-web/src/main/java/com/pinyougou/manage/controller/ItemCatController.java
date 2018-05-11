@@ -16,10 +16,12 @@ public class ItemCatController {
     @Reference
     private ItemCatService itemCatService;
 
+
     @RequestMapping("/findAll")
     public List<TbItemCat> findAll() {
         return itemCatService.findAll();
     }
+
 
     @GetMapping("/findPage")
     public PageResult findPage(@RequestParam(value = "page", defaultValue = "1")Integer page,
@@ -85,6 +87,7 @@ public class ItemCatController {
      */
     @GetMapping("/findByParentId")
     public List<TbItemCat> findByParentId(Long pid){
+        itemCatService.updateItemCatToRedis();
         return itemCatService.findByParentId(pid);
     }
 

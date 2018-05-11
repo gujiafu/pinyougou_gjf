@@ -77,7 +77,9 @@ public class TypeTemplateController {
     @PostMapping("/search")
     public PageResult search(@RequestBody  TbTypeTemplate typeTemplate, @RequestParam(value = "page", defaultValue = "1")Integer page,
                                @RequestParam(value = "rows", defaultValue = "10")Integer rows) {
+        typeTemplateService.updateTypeTemplateToRedis();
         return typeTemplateService.search(page, rows, typeTemplate);
     }
+
 
 }

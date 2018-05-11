@@ -12,6 +12,7 @@ import com.pinyougou.service.impl.BaseServiceImpl;
 import com.pinyougou.vo.PageResult;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import tk.mybatis.mapper.entity.Example;
 
 import java.util.List;
@@ -24,6 +25,8 @@ public class TypeTemplateServiceImpl extends BaseServiceImpl<TbTypeTemplate> imp
     private TypeTemplateMapper typeTemplateMapper;
     @Autowired
     private SpecificationOptionServiceImpl specificationOptionService;
+    @Autowired
+    private RedisTemplate redisTemplate;
 
     @Override
     public PageResult search(Integer page, Integer rows, TbTypeTemplate typeTemplate) {
@@ -56,5 +59,24 @@ public class TypeTemplateServiceImpl extends BaseServiceImpl<TbTypeTemplate> imp
             map.put("options",options);
         }
         return maps;
+    }
+
+    /**
+     * 查询所有类型模板的品牌brandIds和规格specIds到缓存Redis中
+     */
+    @Override
+    public void updateTypeTemplateToRedis() {
+        List<TbTypeTemplate> typeTemplateList = findAll();
+        if(typeTemplateList!=null && typeTemplateList.size()>0){
+
+            for (TbTypeTemplate typeTemplate : typeTemplateList) {
+                // 遍历储存brandIds
+                List<Map> brandList = JSONArray.parseArray(typeTemplate.getBrandIds(), Map.class);
+                redisTemplate.boundHashOps("brandList").put(typeTemplate.getId(),brandList);
+                // 遍历储存specIds
+                List<Map> specList = findSpecList(typeTemplate.getId());
+                redisTemplate.boundHashOps("specList").put(typeTemplate.getId(),specList);
+            }
+        }
     }
 }

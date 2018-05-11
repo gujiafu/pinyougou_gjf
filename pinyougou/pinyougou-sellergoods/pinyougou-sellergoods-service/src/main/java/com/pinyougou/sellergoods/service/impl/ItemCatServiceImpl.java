@@ -9,6 +9,7 @@ import com.pinyougou.sellergoods.service.ItemCatService;
 import com.pinyougou.service.impl.BaseServiceImpl;
 import com.pinyougou.vo.PageResult;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import tk.mybatis.mapper.entity.Example;
 
 import java.util.List;
@@ -18,6 +19,8 @@ public class ItemCatServiceImpl extends BaseServiceImpl<TbItemCat> implements It
 
     @Autowired
     private ItemCatMapper itemCatMapper;
+    @Autowired
+    private RedisTemplate redisTemplate;
 
     @Override
     public PageResult search(Integer page, Integer rows, TbItemCat itemCat) {
@@ -45,5 +48,16 @@ public class ItemCatServiceImpl extends BaseServiceImpl<TbItemCat> implements It
         TbItemCat itemCat = new TbItemCat();
         itemCat.setParentId(pid);
         return itemCatMapper.select(itemCat);
+    }
+
+    /**
+     * 缓存商品分类到Redis中
+     */
+    @Override
+    public void updateItemCatToRedis() {
+        List<TbItemCat> itemCatList = findAll();
+        for (TbItemCat itemCat : itemCatList) {
+            redisTemplate.boundHashOps("itemCat").put(itemCat.getName(),itemCat.getTypeId());
+        }
     }
 }
