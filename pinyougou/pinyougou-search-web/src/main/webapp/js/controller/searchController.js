@@ -37,4 +37,16 @@ app.controller("searchController",function ($scope, searchService) {
         $scope.search();
     }
 
+    // 如果关键字中包含品牌字符串那么就隐藏品牌
+    $scope.keywordsIsBrand = function () {
+        var brandList = $scope.resultMap.brandList;
+        for (var i = 0; i < brandList.length; i++) {
+            var brand = brandList[i];
+            if($scope.searchMap.keywords.indexOf(brand.text)>=0){
+                return true;
+            }
+        }
+        return false;
+    }
+
 })
