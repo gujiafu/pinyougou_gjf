@@ -6,6 +6,7 @@ import com.pinyougou.search.service.ItemSearchService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.solr.core.SolrTemplate;
 import org.springframework.data.solr.core.query.*;
@@ -61,6 +62,9 @@ public class ItemSearchServiceImpl implements ItemSearchService {
     private Map<String, Object> searchItem(Map<String, Object> searchMap) {
 
         String keywords = (String) searchMap.get("keywords");
+        // 处理关键字空格问题
+        keywords = keywords.replace(" ", "");
+
         // 设置高亮查询
         SimpleHighlightQuery query = new SimpleHighlightQuery();
         Criteria criteria = new Criteria("item_keywords").is(keywords);
@@ -90,6 +94,30 @@ public class ItemSearchServiceImpl implements ItemSearchService {
                 SimpleFilterQuery filterQuery = new SimpleFilterQuery(criteriaSpec);
                 query.addFilterQuery(filterQuery);
             }
+        }
+
+        // 设置价格范围
+        String price = (String) searchMap.get("price");
+        if(StringUtils.isNotBlank(price)){
+            String[] strArray = price.split("-");
+            if(strArray!=null && strArray.length>0){
+                Criteria priceCriteria1 = new Criteria("item_price").greaterThanEqual(strArray[0]);
+                SimpleFilterQuery filterQuery1 = new SimpleFilterQuery(priceCriteria1);
+                query.addFilterQuery(filterQuery1);
+                if(!strArray[1].equals("*")){
+                    Criteria priceCriteria2 = new Criteria("item_price").lessThanEqual(strArray[1]);
+                    SimpleFilterQuery filterQuery2 = new SimpleFilterQuery(priceCriteria2);
+                    query.addFilterQuery(filterQuery2);
+                }
+            }
+        }
+
+        // 设置排序查询
+        String sortField = (String) searchMap.get("sortField");
+        String sort = (String) searchMap.get("sort");
+        if(StringUtils.isNotBlank(sortField) && StringUtils.isNotBlank(sort)){
+            Sort sort1 = new Sort(sort.equals("ASC")? Sort.Direction.ASC: Sort.Direction.DESC,"item_"+sortField);
+            query.addSort(sort1);
         }
 
 
