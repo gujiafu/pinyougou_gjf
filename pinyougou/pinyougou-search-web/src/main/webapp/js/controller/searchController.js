@@ -1,4 +1,4 @@
-app.controller("searchController",function ($scope, searchService) {
+app.controller("searchController",function ($scope, $location, searchService) {
 
     $scope.search = function () {
         searchService.search($scope.searchMap).success(function (response) {
@@ -47,6 +47,13 @@ app.controller("searchController",function ($scope, searchService) {
             }
         }
         return false;
+    }
+
+    // 由门户首页跳转到搜索系统查询
+    $scope.toSearch = function () {
+        $scope.searchMap.keywords = $location.search()["keywords"];
+        //重新搜索
+        $scope.search();
     }
 
 })

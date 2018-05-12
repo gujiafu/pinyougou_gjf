@@ -9,4 +9,9 @@ app.controller("indexController", function ($scope, $http, contentService) {
         })
     }
 
+    // 跳转到搜索系统
+    $scope.toSearch = function () {
+        location.href="http://search.pinyougou.com/search.html#?keywords="+$scope.keywords;
+    }
+
 });
