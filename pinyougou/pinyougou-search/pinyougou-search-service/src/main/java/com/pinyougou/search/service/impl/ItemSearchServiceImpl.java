@@ -55,6 +55,27 @@ public class ItemSearchServiceImpl implements ItemSearchService {
     }
 
     /**
+     * 根据goods的ids查找itemList,并添加到solr中
+     * @param itemList 商品id的集合
+     */
+    public void addItemListToSolr(List<TbItem> itemList) {
+        solrTemplate.saveBeans(itemList);
+        solrTemplate.commit();
+    }
+
+    /**
+     * 根据goods的ids查找itemList,从solr中删除
+     * @param goodIds 商品spu的id的集合
+     */
+    public void deleteItemListFromSolr(List<Long> goodIds) {
+        Criteria criteria = new Criteria("item_goodsid").in(goodIds);
+        SimpleQuery query = new SimpleQuery();
+        query.addCriteria(criteria);
+        solrTemplate.delete(query);
+        solrTemplate.commit();
+    }
+
+    /**
      * 搜索关键字高亮显示并搜索商品列表
      * @param searchMap
      * @return

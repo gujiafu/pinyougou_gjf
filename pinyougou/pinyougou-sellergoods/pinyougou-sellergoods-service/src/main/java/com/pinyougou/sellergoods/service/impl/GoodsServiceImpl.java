@@ -16,10 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 import tk.mybatis.mapper.entity.Example;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 @Service(interfaceClass = GoodsService.class,timeout = 600000)
 @Transactional
@@ -113,6 +110,39 @@ public class GoodsServiceImpl extends BaseServiceImpl<TbGoods> implements GoodsS
         goods.setItemList(itemList);
 
         return goods;
+    }
+
+    /**
+     * 更改商品goods sku的状态
+     * @param ids
+     * @param status
+     * @return
+     */
+    public void updateStatus(Long[] ids, String status) {
+        Example example = new Example(TbGoods.class);
+        example.createCriteria().andIn("id", Arrays.asList(ids));
+        List<TbGoods> goodsList = goodsMapper.selectByExample(example);
+        if(goodsList!=null && goodsList.size()>0){
+            for (TbGoods goods : goodsList) {
+                goods.setAuditStatus(status);
+                goodsMapper.updateByPrimaryKeySelective(goods);
+            }
+        }
+
+    }
+
+    /**
+     * 根据商品sku的id和状态查找商品sku
+     * @param ids 商品goods的id
+     * @param  status 商品item的状态
+     * @return
+     */
+    public List<TbItem> findItemListByGoodsIdsAndStatus(Long[] ids, String status) {
+        Example example = new Example(TbItem.class);
+        example.createCriteria().andIn("goodsId",Arrays.asList(ids));
+        example.createCriteria().andEqualTo("status",status);
+        List<TbItem> itemList = itemMapper.selectByExample(example);
+        return itemList;
     }
 
     /**
