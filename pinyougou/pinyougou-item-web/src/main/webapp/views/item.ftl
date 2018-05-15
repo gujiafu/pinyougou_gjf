@@ -12,18 +12,21 @@
     <link rel="stylesheet" type="text/css" href="../css/widget-cartPanelView.css" />
     <script type="text/javascript" src="../plugins/angularjs/angular.min.js"> </script>
     <script type="text/javascript" src="../js/base.js"> </script>
-    <script type="text/javascript" src="../js/controller/itemController.js"> </script>
+
     <script type="text/javascript">
-        var itemList =[
-            <#list itemList as item>
-                {"id":"${item.id?c}",
-                    "title":"${item.title}",
-                    "price":"${item.price?c}",
-                    "spec":"${item.spec}"
-                },
-            </#list>
-        ]
+        //商品sku集合
+        var skuList =[
+        <#list itemList as item>
+            {
+                "id":"${item.id?c}",
+                "title":"${item.title}",
+                "price":"${item.price?c}",
+                "spec":${item.spec}
+            },
+        </#list>
+        ];
     </script>
+    <script type="text/javascript" src="../js/controller/itemController.js"> </script>
 </head>
 
 
@@ -32,7 +35,7 @@
 <#assign specificationList =goodsDesc.specificationItems?eval>
 
 
-<body ng-app="pinyougou" ng-controller="itemController" ng-init="">
+<body ng-app="pinyougou" ng-controller="itemController" ng-init="loadSku()">
 <!-- 头部栏位 -->
 <!--页面顶部开始-->
 <#include "head.ftl"/>
@@ -82,7 +85,7 @@
             </div>
             <div class="fr itemInfo-wrap">
                 <div class="sku-name">
-                    <h4>Apple iPhone 6s（A1700）64G玫瑰金色 移动通信电信4G手机</h4>
+                    <h4>{{sku.title}}</h4>
                 </div>
                 <div class="news"><span>${goods.caption!}</span></div>
                 <div class="summary">
@@ -92,7 +95,7 @@
                         </div>
                         <div class="fl price">
                             <i>¥</i>
-                            <em>${goods.price!}</em>
+                            <em>{{sku.price}}</em>
                             <span>降价通知</span>
                         </div>
                         <div class="fr remark">
@@ -166,7 +169,7 @@
                         <div class="fl">
                             <ul class="btn-choose unstyled">
                                 <li>
-                                    <a href="cart.html" target="_blank" class="sui-btn  btn-danger addshopcar">加入购物车</a>
+                                    <a ng-click="addCart()" href="#" target="_blank" class="sui-btn  btn-danger addshopcar">加入购物车</a>
                                 </li>
                             </ul>
                         </div>

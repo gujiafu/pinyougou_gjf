@@ -23,7 +23,7 @@ public class ItemController {
 
     @GetMapping("/{goodsId}")
     public ModelAndView toItemPage(@PathVariable Long goodsId){
-        ModelAndView mv = new ModelAndView("item");
+        ModelAndView mv = new ModelAndView("/item.ftl");
 //        mv.setViewName("item");
         // 根据id查找spu
         Goods goods = goodsService.findGoodsByIdAndStatus(goodsId,"1");
